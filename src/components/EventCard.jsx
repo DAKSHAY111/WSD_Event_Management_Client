@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -9,9 +9,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 function EventCard({ title, description,image,eventId }) {
-  const history = useNavigate();
+  const navigate = useNavigate();
+
   const handleDetailsClick = () => {
-    history.push(`/events/${eventId}`);
+    navigate(`/events/${eventId}`);
   };
 
   const descriptionStyle = {
@@ -49,7 +50,6 @@ function EventCard({ title, description,image,eventId }) {
 
 EventCard.propTypes = {
   title: PropTypes.string.isRequired,
-  // image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   eventId: PropTypes.number.isRequired,
 };

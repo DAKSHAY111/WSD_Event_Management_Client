@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import Contact from "./Pages/Contact";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import EventDetails from "./Pages/EventDetails";
 
 
 const Routing = () => {
@@ -16,6 +17,7 @@ const Routing = () => {
       <Route path="/contact" element={<Contact/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<Signup/>}/>
+      <Route path="/events/:eventId" element={<EventDetails/>}/>
       <Route path="*" element={<Home/>}/>
     </Routes>
   );
