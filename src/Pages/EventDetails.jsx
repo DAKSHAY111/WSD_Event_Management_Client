@@ -17,8 +17,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-// import Select from "@mui/material";
-// import MenuItem from "@mui/material";
 
 const EventDetails = () => {
   const { eventId } = useParams();

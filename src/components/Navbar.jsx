@@ -12,14 +12,17 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const pages = ["Home", "Register", "Contact Us","Dashboard"];
+const pages = ["Home", "Register", "Contact Us", "Dashboard"];
 const settings = ["Add Event", "Update Events", "Logout"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const user = localStorage.getItem("user");
+  const Navigate = useNavigate();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -89,7 +92,11 @@ function Navbar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" component="a" href={`localhost:3000/${page}`}>
+                  <Typography
+                    textAlign="center"
+                    component="a"
+                    href={`localhost:3000/${page}`}
+                  >
                     {page}
                   </Typography>
                 </MenuItem>
@@ -116,16 +123,26 @@ function Navbar() {
             EventSpotter
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            <Button
+              key={0}
+              component="a"
+              href="/"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Home
+            </Button>
+            {user && (
               <Button
-                key={page}
-                href={`localhost:3000/${page}`}
+                key={1}
+                component="a"
+                href="/Dashboard"
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                Dashboard
               </Button>
-            ))}
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -151,9 +168,27 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center" component="a" href="addEvent">
-                  Add Event
-                </Typography>
+                {user && (
+                  <Button variant="text" href="/addEvent">
+                    Add Event
+                  </Button>
+                )}
+
+                {user ? (
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      localStorage.removeItem("user");
+                      Navigate("/login");
+                    }}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <Button variant="text" href="/Login">
+                    Admin Login
+                  </Button>
+                )}
               </MenuItem>
             </Menu>
           </Box>

@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Typography } from "@mui/material";
 
 const ViewParticipant = () => {
   const { eventId } = useParams();
@@ -82,14 +83,28 @@ const ViewParticipant = () => {
         </Grid>
       ) : (
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-            <TableHead>
+          <Table
+            sx={{ minWidth: 650, marginTop: "15px" }}
+            size="small"
+            aria-label="a dense table"
+          >
+            <TableHead sx={{  color: "primary" }}>
               <TableRow>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Email</TableCell>
-                <TableCell align="right">Contact Number</TableCell>
-                <TableCell align="right">City</TableCell>
-                <TableCell align="right">Gender</TableCell>
+                <TableCell align="right">
+                  <Typography variant="button">Name</Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="button">Email</Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="button">Contact Number</Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="button">City</Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="button">Gender</Typography>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -11,16 +11,21 @@ import Dashboard from "./Pages/Dashboard";
 import ViewParticipant from "./Pages/ViewParticipant";
 
 const Routing = () => {
+  let user = localStorage.getItem("user")
   return (
     <Routes>
       <Route path="/Home" element={<Home/>}/>
-      <Route path="/addEvent" element={<AddEvent/>}/>
+      
+      {user ? <Route path="/AddEvent" element={<AddEvent/>}/> : <Route path="/AddEvent" element={<Home/>}/> }
+
       <Route path="/contact" element={<Contact/>}/>
-      <Route path="/Dashboard" element={<Dashboard/>}/>
+
+      {user && <Route path="/dashboard" element={<Dashboard/>}/>}
       <Route path="/login" element={<Login/>}/>
-      <Route path="/signup" element={<Signup/>}/>
       <Route path="/events/:eventId" element={<EventDetails/>}/>
-      <Route path="/eventsParticipant/:eventId" element={<ViewParticipant/>}/>
+
+      {user && <Route path="/eventsParticipant/:eventId" element={<ViewParticipant/>}/>}
+
       <Route path="*" element={<Home/>}/>
     </Routes>
   );
