@@ -1,26 +1,74 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Grid, CardMedia, Card, CardContent } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  CardMedia,
+  Card,
+  CardContent,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-
+// import Select from "@mui/material";
+// import MenuItem from "@mui/material";
 
 const EventDetails = () => {
   const { eventId } = useParams();
   const [openDialog, setOpenDialog] = useState(false);
   const [event, setevent] = useState(null);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission here
+  const [user, setUser] = useState({
+    eventId: eventId,
+    name: "",
+    email: "",
+    gender: "",
+    city: "",
+    contactNumber: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    console.log(value);
+    setUser((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    console.log(user);
+    try {
+      const response = await fetch(
+        `https://localhost:7035/api/ParticipantEvents`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
+
+      if (response.ok) {
+        alert("Participated Successfully");
+      } else {
+        console.log(`Failed to Participate ... please try again later`);
+      }
+    } catch (error) {
+      console.error(`Failed to Participate ... please try again later`, error);
+    }
+
     setOpenDialog(false);
   };
-  
-  
+
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -56,21 +104,81 @@ const EventDetails = () => {
             padding: "24px",
           }}
         >
-          <Dialog open={openDialog} onClose={()=>setOpenDialog(false)}>
+          <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
             <DialogTitle>Enter Your Details</DialogTitle>
             <DialogContent>
               <form onSubmit={handleSubmit}>
-                <TextField label="Name" fullWidth margin="normal" />
-                <TextField label="Email" fullWidth margin="normal" />
-                <TextField label="Gender" fullWidth margin="normal" />
-                <TextField label="City" fullWidth margin="normal" />
-                <TextField label="Contact Number" fullWidth margin="normal" />
+                <Grid container>
+                  <Grid Item xs={12}>
+                    <TextField
+                      label="Participant Name"
+                      fullWidth
+                      required
+                      name="name"
+                      sx={{ my: "auto" }}
+                      value={user.name}
+                      variant="filled"
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+
+                  <Grid Item xs={12}>
+                    <TextField
+                      label="Email Address"
+                      fullWidth
+                      required
+                      sx={{ margin: "auto" }}
+                      name="email"
+                      value={user.email}
+                      variant="filled"
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                  <Grid Item xs={12}>
+                    <FormControl fullWidth required>
+                      <InputLabel>gender</InputLabel>
+                      <Select
+                        name="gender"
+                        value={user.gender}
+                        onChange={handleInputChange}
+                      >
+                        <MenuItem value="Male">Male</MenuItem>
+                        <MenuItem value="Female">Female</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid Item xs={12}>
+                    <TextField
+                      label="City"
+                      fullWidth
+                      required
+                      name="city"
+                      variant="filled"
+                      sx={{ my: "auto" }}
+                      value={user.city}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                  <Grid Item xs={12}>
+                  <TextField
+                      label="Contact Number"
+                      fullWidth
+                      required
+                      name="contactNumber"
+                      variant="filled"
+                      sx={{ my: "auto" }}
+                      value={user.contactNumber}
+                      onChange={handleInputChange}
+                    />
+                  </Grid>
+                </Grid>
               </form>
             </DialogContent>
             <DialogActions>
-              <Button onClick={()=>setOpenDialog(!openDialog)}>Cancel</Button>
+              <Button onClick={() => setOpenDialog(!openDialog)}>Cancel</Button>
               <Button
-                type="submit"
+                onClick={()=> handleSubmit()}
                 form="participation-form"
                 variant="contained"
                 color="primary"
@@ -94,7 +202,11 @@ const EventDetails = () => {
                   alt={event.eventName}
                   height="450"
                   image={event.imageUrl}
-                  style={{ objectFit: "cover", maxWidth: "100%", height: "auto" }}
+                  style={{
+                    objectFit: "cover",
+                    maxWidth: "100%",
+                    height: "auto",
+                  }}
                 />
               </Card>
             </Grid>
