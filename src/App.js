@@ -9,6 +9,7 @@ import Signup from "./Pages/Signup";
 import EventDetails from "./Pages/EventDetails";
 import Dashboard from "./Pages/Dashboard";
 import ViewParticipant from "./Pages/ViewParticipant";
+import UpdateEvent from "./Pages/UpdateEvent";
 
 const Routing = () => {
   let user = localStorage.getItem("user")
@@ -17,6 +18,7 @@ const Routing = () => {
       <Route path="/Home" element={<Home/>}/>
       
       {user ? <Route path="/AddEvent" element={<AddEvent/>}/> : <Route path="/AddEvent" element={<Home/>}/> }
+      {user ? <Route path="/updateEvent/:eventId" element={<UpdateEvent/>}/> : <Route path="/updateEvent/:eventId" element={<Home/>}/> }
 
       <Route path="/contact" element={<Contact/>}/>
 

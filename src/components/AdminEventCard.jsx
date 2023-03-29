@@ -13,6 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import EditIcon from '@mui/icons-material/Edit';
 
 const AdminEventCard = ({ title, description, image, eventId }) => {
   const navigate = useNavigate();
@@ -116,6 +117,14 @@ const AdminEventCard = ({ title, description, image, eventId }) => {
             onClick={handleClickOpen}
           >
             Delete
+          </Button>
+          <Button
+            variant="outlined"
+            color="success"
+            startIcon={<EditIcon />}
+            onClick={()=>{navigate(`/updateEvent/${eventId}`)}}
+          >
+            Update Details
           </Button>
         </CardActions>
       </Card>
