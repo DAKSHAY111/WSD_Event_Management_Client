@@ -12,6 +12,8 @@ import ViewParticipant from "./Pages/ViewParticipant";
 import UpdateEvent from "./Pages/UpdateEvent";
 
 const Routing = () => {
+
+  
   let user = localStorage.getItem("user")
   return (
     <Routes>
